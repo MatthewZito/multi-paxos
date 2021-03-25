@@ -45,11 +45,21 @@ class Leader(Role):
         assert not self.scouting
 
         self.scouting = True
-        self.scout_gen(self.node, self.ballot_num, self.peers).start()
+        self.scout_gen(
+            self.node,
+            self.ballot_num,
+            self.peers
+        ).start()
 
     def spawn_commander(self, ballot_num, slot):
         proposal = self.proposals[slot]
-        self.commander_gen(self.node, ballot_num, slot, proposal, self.peers).start()
+        self.commander_gen(
+            self.node,
+            ballot_num,
+            slot,
+            proposal,
+            self.peers
+        ).start()
 
 
     def proc_adopted(self, sender, ballot_num, accepted_proposals):

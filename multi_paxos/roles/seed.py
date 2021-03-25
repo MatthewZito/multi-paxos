@@ -59,7 +59,7 @@ class Seed(Role):
             self.node,
             peers=self.peers,
             executor=self.executor
-            )
+        )
 
         genesis.start()
         self.stop()

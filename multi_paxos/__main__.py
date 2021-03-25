@@ -33,7 +33,7 @@ def proc_sequence(network, node, key):
                 network.stop()
             return
 
-        inp, out = reqs.pop(0)
+        input, out = reqs.pop(0)
 
         def done(output):
             assert output == out, f'{output} != {out}'
@@ -41,7 +41,7 @@ def proc_sequence(network, node, key):
 
         Requester(
             node,
-            inp,
+            input,
             done
         ).start()
 
@@ -56,7 +56,8 @@ def main():
 
     network = Network(int(sys.argv[1]))
 
-    peers = [f'N{i for i in range(6)}']
+    peers = ['N%d' % i for i in range(7)]
+    print(peers)
 
     for peer in peers:
         node = network.new_node(addr=peer)
@@ -76,7 +77,7 @@ def main():
                 peers=peers
             ).start()
 
-    for key in 'abcdef':
+    for key in 'abcdefg':
         proc_sequence(
             network,
             node,
@@ -86,4 +87,7 @@ def main():
     network.run()
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('\n\n[!] Execution stopped by user')

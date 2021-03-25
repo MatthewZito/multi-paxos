@@ -22,8 +22,9 @@ class Initializer(Role):
     """
 
     def __init__(self, node, peers, executor,
-        replica_gen=Replica, acceptor_gen=Acceptor, leader_gen=Leader,
-        commander_gen=Commander, scout_gen=Scout):
+            replica_gen=Replica, acceptor_gen=Acceptor, leader_gen=Leader,
+            commander_gen=Commander, scout_gen=Scout):
+
         super(Initializer, self).__init__(node)
 
         self.executor = executor
@@ -52,6 +53,7 @@ class Initializer(Role):
             decisions
         """
         self.acceptor_gen(self.node)
+
         self.replica_gen(
             self.node,
             executor=self.executor,
@@ -60,6 +62,7 @@ class Initializer(Role):
             slot=slot,
             decisions=decisions
         )
+
         self.leader_gen(
             self.node,
             peers=self.peers,

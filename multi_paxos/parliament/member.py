@@ -17,7 +17,7 @@ class Member():
     """
 
     def __init__(self, state_machine, network,
-        peers, seed = None, seed_gen = Seed,
+        peers, seed=None, seed_gen=Seed,
         init_gen = Initializer
     ):
         self.network = network
@@ -26,15 +26,15 @@ class Member():
         if seed is not None:
             self.startup_role = seed_gen(
                 self.node,
-                initial_state = seed,
-                peers = peers,
-                executor = state_machine
+                initial_state=seed,
+                peers=peers,
+                executor=state_machine
             )
         else:
             self.startup_role = init_gen(
                 self.node,
-                executor = state_machine,
-                peers = peers
+                executor=state_machine,
+                peers=peers
             )
 
         self.requester = None
@@ -44,10 +44,10 @@ class Member():
         """Initialize the network protocol on a discrete thread
         """
         self.startup_role.start()
-        self.thread = threading.Thread(target = self.network.run)
+        self.thread = threading.Thread(target=self.network.run)
         self.thread.start()
 
-    def invoke(self, input_value, requester_gen = Requester):
+    def invoke(self, input_value, requester_gen=Requester):
         """Invokes the proposal for a state transition
 
         Return the results upon a given proposal reaching a decided state
@@ -61,7 +61,9 @@ class Member():
             State machine output
         """
         assert self.requester is None
+
         q = queue.Queue()
+
         self.requester = requester_gen(
             self.node,
             input_value,

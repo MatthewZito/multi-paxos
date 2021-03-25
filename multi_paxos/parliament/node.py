@@ -17,7 +17,7 @@ class Node():
         self.network = network
 
         # if we don't recv an addr, generate the next unique id and assign
-        self.addr = addr or f'N{next(self.unique_ids)}'
+        self.addr = addr or 'N%d' % next(self.unique_ids)
         # initialize simulation and logging
         self.logger = SimulacronLogger(
             logging.getLogger(self.addr),
@@ -54,14 +54,16 @@ class Node():
             sender: sender instance's addr
             message (namedtuple): message object containing ballot data
         """
-        handler_name = f'proc_{type(message).__name__.lower()}'
+        handler_name = 'proc_%s' % type(message).__name__
 
         for comp in self.roles[:]:
             if not hasattr(comp, handler_name):
                 continue
+
             comp.logger.debug(f'received {message} from {sender}')
 
             fn = getattr(comp, handler_name)
+
             fn(
                 sender=sender,
                 **message._asdict()

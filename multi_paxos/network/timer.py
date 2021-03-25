@@ -33,3 +33,6 @@ class Timer():
 
     def cancel(self):
         self.cancelled = True
+
+    def cmp(self, x, y):
+        return (x > y) - (x < y)
