@@ -34,14 +34,14 @@ class Requester(Role):
 
         self.invoke_timer = self.set_timer(INVOKE_RETRANSMIT, self.start)
 
-    def proc_invoked(self, sender, client_id, out):
+    def proc_invoked(self, sender, client_id, output):
         if client_id != self.client_id:
             return
 
         self.logger.debug(
-            f'Received output {out}'
+            f'Received output {output}'
         )
 
         self.invoke_timer.cancel()
-        self.cb(out)
+        self.cb(output)
         self.stop()

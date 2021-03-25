@@ -117,10 +117,10 @@ class Replica(Role):
 
         if proposal.caller is not None:
             # perform client op
-            self.state, out = self.executor(self.state, proposal.input)
+            self.state, output = self.executor(self.state, proposal.input)
             self.node.send([proposal.caller], INVOKED(
                 client_id=proposal.client_id,
-                output=out
+                output=output
             ))
 
     # leader tracking

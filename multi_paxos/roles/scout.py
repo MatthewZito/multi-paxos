@@ -60,6 +60,7 @@ class Scout(Role):
                 # Node is now adopted - does NOT mean no other leader is active;
                 # possible conflicts will be handled by Commanders
                 self.node.send([self.node.addr], ADOPTED(
+                    ballot_num=ballot_num,
                     accepted_proposals=accepted_proposals
                 ))
 
