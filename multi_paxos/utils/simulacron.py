@@ -13,6 +13,6 @@ class SimulacronLogger(logging.LoggerAdapter):
 
     def get_child(self, name):
         return self.__class__(
-            self.logger.get_child(name),
+            self.logger.getChild(name),
             { 'network': self.extra['network'] }
         )

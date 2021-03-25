@@ -1,6 +1,5 @@
 """Requester Role"""
-
-from .initializer import Initializer
+import itertools
 
 from ..parliament.role import Role
 
@@ -15,11 +14,13 @@ class Requester(Role):
     The Requester sends Invoke messages to the local Replica
     until it receives a corresponding Invoked response
     """
+    client_ids = itertools.count(start=100000)
+
 
     def __init__(self, node, n, cb):
         super(Requester, self).__init__(node)
 
-        self.client_id = self.client_id.next()
+        self.client_id = next(self.client_ids)
         self.n = n
         self.output = None
         self.cb = cb
