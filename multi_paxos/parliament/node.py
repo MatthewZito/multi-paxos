@@ -54,7 +54,7 @@ class Node():
             sender: sender instance's addr
             message (namedtuple): message object containing ballot data
         """
-        handler_name = f'do_{type(message).__name__}'
+        handler_name = f'proc_{type(message).__name__.lower()}'
 
         for comp in self.roles[:]:
             if not hasattr(comp, handler_name):
