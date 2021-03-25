@@ -1,13 +1,9 @@
+"""Logger"""
 import logging
 
-"""TODO"""
 class SimulacronLogger(logging.LoggerAdapter):
-    """[summary]
-
-    Args:
-        logging ([type]): [description]
+    """Simulated Logger - injects timestamp into all log messages
     """
-
     def process(self, message, kwargs):
         return 'T=%.4f %s' % (self.extra['network'].now, message), kwargs
 

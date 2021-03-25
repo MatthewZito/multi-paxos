@@ -6,14 +6,16 @@ from .roles.initializer import Initializer
 from .roles.requester import Requester
 from .roles.seed import Seed
 
+from .utils.printer import Colors
+
 from .state_machines.test_machine import test_machine
 
-sequences_running = 0
+seq_active = 0
 
 def proc_sequence(network, node, key):
-    global sequences_running
+    global seq_active
 
-    sequences_running += 1
+    seq_active += 1
 
     reqs = [
         (('get', key), None),
@@ -26,14 +28,14 @@ def proc_sequence(network, node, key):
 
     def request():
         if not reqs:
-            global sequences_running
-            sequences_running -= 1
+            global seq_active
+            seq_active -= 1
 
-            if not sequences_running:
+            if not seq_active:
                 network.stop()
             return
 
-        input, out = reqs.pop(0)
+        inp, out = reqs.pop(0)
 
         def done(output):
             assert output == out, f'{output} != {out}'
@@ -41,7 +43,7 @@ def proc_sequence(network, node, key):
 
         Requester(
             node,
-            input,
+            inp,
             done
         ).start()
 
@@ -49,15 +51,15 @@ def proc_sequence(network, node, key):
 
 
 def main():
+    pointer = '--->'
     logging.basicConfig(
-        format='%(name)s - %(message)s',
+        format=f'{Colors.BOLD}{Colors.OKGREEN}%(name)s{Colors.ENDC}{Colors.FAIL} {pointer} {Colors.ENDC} %(message)s{Colors.ENDC}',
         level=logging.DEBUG
     )
 
     network = Network(int(sys.argv[1]))
 
     peers = ['N%d' % i for i in range(7)]
-    print(peers)
 
     for peer in peers:
         node = network.new_node(addr=peer)

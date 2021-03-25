@@ -107,4 +107,4 @@ class Leader(Role):
                     )
 
         else:
-            self.logger.info('Received Propose for a lot already being proposed')
+            self.logger.info('Received Propose for a slot already being proposed')
