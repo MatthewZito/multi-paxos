@@ -1,7 +1,11 @@
+"""Base Parliamentary Member class"""
+
 import queue
 import threading
 
-"""Base Parliamentary Member class"""
+from ..roles.initializer import Initializer
+from ..roles.requester import Requester
+from ..roles.seed import Seed
 
 class Member():
     """Initializer for each cluster member (node).

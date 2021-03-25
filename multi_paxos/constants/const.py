@@ -1,3 +1,5 @@
+"""Protocol Constants"""
+
 from .message_types import BALLOT, PROPOSAL
 
 JOIN_RETRANSMIT = 0.7

@@ -11,9 +11,7 @@ from .scout import Scout
 from ..parliament.role import Role
 
 from ..constants.const import JOIN_RETRANSMIT
-from ..constants.message_types import \
-    JOIN, \
-    WELCOME
+from ..constants.message_types import JOIN
 
 class Initializer(Role):
     """Initializer Role - Introduce a new Node to an extant cluster

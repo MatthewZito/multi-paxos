@@ -12,7 +12,7 @@ no-space-check=empty-line
 
 [BASIC]
 
-good-names=e,ex,f,s,t
+good-names=cb,fn,n
 
 [SIMILARITIES]
 

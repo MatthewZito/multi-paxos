@@ -1,3 +1,5 @@
+"""Multi-Paxos Algorithm Message Types"""
+
 from collections import namedtuple
 
 ACCEPTED = namedtuple('accepted', [ 'slot', 'ballot_num' ])
