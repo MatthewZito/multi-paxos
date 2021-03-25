@@ -19,11 +19,17 @@ def proc_sequence(network, node, key):
 
     reqs = [
         (('get', key), None),
-        (('set', key, 10), 10),
-        (('get', key), 10),
-        (('set', key, 20), 20),
-        (('set', key, 30), 30),
-        (('get', key), 30),
+        (('set', key, 9), 9),
+        (('get', key), 9),
+        (('set', key, 6), 6),
+        (('set', key, 32), 32),
+        (('get', key), 32),
+        (('set', key, 39), 39),
+        (('get', key), 39),
+        (('set', key, 66), 66),
+        (('set', key, 77), 77),
+        (('get', key), 77)
+
     ]
 
     def request():
@@ -47,7 +53,11 @@ def proc_sequence(network, node, key):
             done
         ).start()
 
-    network.set_timer(None, 1.0, request)
+    network.set_timer(
+        None,
+        1.0,
+        request
+    )
 
 
 def main():
@@ -59,12 +69,12 @@ def main():
 
     network = Network(int(sys.argv[1]))
 
-    peers = ['N%d' % i for i in range(7)]
+    peers = ['NODE_%d' % i for i in range(7)]
 
     for peer in peers:
         node = network.new_node(addr=peer)
 
-        if peer == 'N0':
+        if peer == 'NODE_0':
             Seed(
                 node,
                 initial_state={},
@@ -79,7 +89,7 @@ def main():
                 peers=peers
             ).start()
 
-    for key in 'abcdefg':
+    for key in 'ABCDEFGHIJ':
         proc_sequence(
             network,
             node,

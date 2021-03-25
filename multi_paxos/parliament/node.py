@@ -17,7 +17,7 @@ class Node():
         self.network = network
 
         # if we don't recv an addr, generate the next unique id and assign
-        self.addr = addr or 'N%d' % next(self.unique_ids)
+        self.addr = addr or 'NODE_%d' % next(self.unique_ids)
         # initialize simulation and logging
         self.logger = SimulacronLogger(
             logging.getLogger(self.addr),
