@@ -8,7 +8,7 @@ from .roles.seed import Seed
 
 from .utils.printer import Colors
 
-from .state_machines.test_machine import test_machine
+from .state_machines.key_value_machine import state_machine
 
 seq_active = 0
 
@@ -17,7 +17,7 @@ def proc_sequence(network, node, key):
 
     seq_active += 1
 
-    reqs = [
+    mock_requests = [
         (('get', key), None),
         (('set', key, 9), 9),
         (('get', key), 9),
@@ -29,11 +29,17 @@ def proc_sequence(network, node, key):
         (('set', key, 66), 66),
         (('set', key, 77), 77),
         (('get', key), 77)
-
     ]
 
+    # mock_requests = [
+    #     (('balance', key), 0),
+    #     (('deposit', key, 9), 9),
+    #     (('balance', key), 9),
+    #     (('withdraw', key, 6), 6),
+    # ]
+
     def request():
-        if not reqs:
+        if not mock_requests:
             global seq_active
             seq_active -= 1
 
@@ -41,7 +47,7 @@ def proc_sequence(network, node, key):
                 network.stop()
             return
 
-        inp, out = reqs.pop(0)
+        inp, out = mock_requests.pop(0)
 
         def done(output):
             assert output == out, f'{output} != {out}'
@@ -69,7 +75,7 @@ def main():
 
     network = Network(int(sys.argv[1]))
 
-    peers = ['NODE_%d' % i for i in range(7)]
+    peers = ['NODE_%d' % i for i in range(14)]
 
     for peer in peers:
         node = network.new_node(addr=peer)
@@ -79,17 +85,17 @@ def main():
                 node,
                 initial_state={},
                 peers=peers,
-                executor=test_machine
+                executor=state_machine
             )
 
         else:
             Initializer(
                 node,
-                executor=test_machine,
+                executor=state_machine,
                 peers=peers
             ).start()
 
-    for key in 'ABCDEFGHIJ':
+    for key in 'ABCD':
         proc_sequence(
             network,
             node,

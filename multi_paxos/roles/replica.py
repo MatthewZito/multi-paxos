@@ -78,10 +78,7 @@ class Replica(Role):
         # repropose in new slot if slot was lost and was not a noop
         reproposal = self.proposals.get(slot)
 
-        if (reproposal is not None and
-            reproposal != proposal and
-            reproposal.caller
-            ):
+        if reproposal is not None and reproposal != proposal and reproposal.caller:
             self.propose(reproposal)
 
         # execute pending, decided proposals
@@ -118,6 +115,10 @@ class Replica(Role):
         if proposal.caller is not None:
             # perform client op
             self.state, output = self.executor(self.state, proposal.input)
+
+            # optional debug line - TODO add verbose setting that would toggle this, among other things
+            self.logger.debug(f'\nCurrent state is:\n\n{self.state}\n\nRecorded decisions are:\n\n{self.decisions}\n\nCurrent proposals:\n\n{self.proposals or None}\n\n')
+
             self.node.send([proposal.caller], INVOKED(
                 client_id=proposal.client_id,
                 output=output
