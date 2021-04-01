@@ -57,6 +57,7 @@ class Node():
         handler_name = 'proc_%s' % type(message).__name__
 
         for comp in self.roles[:]:
+            # only execute the message callbacks for which the node has a matching role
             if not hasattr(comp, handler_name):
                 continue
 

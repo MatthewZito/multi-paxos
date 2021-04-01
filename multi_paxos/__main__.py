@@ -31,13 +31,6 @@ def proc_sequence(network, node, key):
         (('get', key), 77)
     ]
 
-    # mock_requests = [
-    #     (('balance', key), 0),
-    #     (('deposit', key, 9), 9),
-    #     (('balance', key), 9),
-    #     (('withdraw', key, 6), 6),
-    # ]
-
     def request():
         if not mock_requests:
             global seq_active
@@ -95,7 +88,7 @@ def main():
                 peers=peers
             ).start()
 
-    for key in 'ABCD':
+    for key in 'ABCDEFGHIJK':
         proc_sequence(
             network,
             node,

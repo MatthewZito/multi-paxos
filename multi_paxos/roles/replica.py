@@ -117,7 +117,7 @@ class Replica(Role):
             self.state, output = self.executor(self.state, proposal.input)
 
             # optional debug line - TODO add verbose setting that would toggle this, among other things
-            self.logger.debug(f'\nCurrent state is:\n\n{self.state}\n\nRecorded decisions are:\n\n{self.decisions}\n\nCurrent proposals:\n\n{self.proposals or None}\n\n')
+            # self.logger.debug(f'\nCurrent state is:\n\n{self.state}\n\nRecorded decisions are:\n\n{self.decisions}\n\nCurrent proposals:\n\n{self.proposals or None}\n\n')
 
             self.node.send([proposal.caller], INVOKED(
                 client_id=proposal.client_id,
